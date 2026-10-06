@@ -49,7 +49,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
         tvDetailTitle.setText(title != null ? title : "");
         tvDetailContent.setText(content != null ? content : "");
-        tvDetailViews.setText("👁 Lượt xem: " + views);
+        tvDetailViews.setText("Lượt xem: " + views);
 
         if (imageUrl != null && !imageUrl.trim().isEmpty()) {
             Picasso.get()
@@ -67,7 +67,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 if (snapshot != null && snapshot.exists()) {
                     Long updatedViews = snapshot.getLong("views");
                     if (updatedViews != null) {
-                        tvDetailViews.setText("👁 Lượt xem: " + updatedViews);
+                        tvDetailViews.setText("Lượt xem: " + updatedViews);
                     }
                 }
             });

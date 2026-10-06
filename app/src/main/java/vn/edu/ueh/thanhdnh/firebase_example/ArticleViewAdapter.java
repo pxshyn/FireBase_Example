@@ -45,7 +45,7 @@ public class ArticleViewAdapter extends RecyclerView.Adapter<ArticleViewHolder> 
 
     holder.getTvTitle().setText(currentArticle.getTitle());
     holder.getTvContent().setText(currentArticle.getContent());
-    holder.getTvViews().setText("👁 " + currentArticle.getViews() + " lượt xem");
+    holder.getTvViews().setText(currentArticle.getViews() + " lượt xem");
 
     String imageUrl = currentArticle.getImageUrl();
     if (imageUrl != null && !imageUrl.trim().isEmpty()) {
