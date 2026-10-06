@@ -47,10 +47,38 @@ public class ArticleDetailActivity extends AppCompatActivity {
         String imageUrl = getIntent().getStringExtra("imageUrl");
         long views = getIntent().getLongExtra("views", 0);
 
+        // Hiển thị ban đầu từ Intent
         tvDetailTitle.setText(title != null ? title : "");
         tvDetailContent.setText(content != null ? content : "");
         tvDetailViews.setText("Lượt xem: " + views);
 
+        updateImage(imageUrl);
+
+        // Đăng ký addSnapshotListener để lắng nghe mọi thay đổi realtime từ Firebase
+        if (id != null && !id.isEmpty()) {
+            db.collection("articles").document(id).addSnapshotListener((snapshot, error) -> {
+                if (snapshot != null && snapshot.exists()) {
+                    String updatedTitle = snapshot.getString("title");
+                    String updatedContent = snapshot.getString("content");
+                    String updatedImageUrl = snapshot.getString("imageUrl");
+                    Long updatedViews = snapshot.getLong("views");
+
+                    if (updatedTitle != null) {
+                        tvDetailTitle.setText(updatedTitle);
+                    }
+                    if (updatedContent != null) {
+                        tvDetailContent.setText(updatedContent);
+                    }
+                    if (updatedViews != null) {
+                        tvDetailViews.setText("Lượt xem: " + updatedViews);
+                    }
+                    updateImage(updatedImageUrl);
+                }
+            });
+        }
+    }
+
+    private void updateImage(String imageUrl) {
         if (imageUrl != null && !imageUrl.trim().isEmpty()) {
             Picasso.get()
                     .load(imageUrl)
@@ -60,17 +88,6 @@ public class ArticleDetailActivity extends AppCompatActivity {
                     .into(ivDetailImage);
         } else {
             ivDetailImage.setImageResource(R.mipmap.ic_launcher);
-        }
-
-        if (id != null && !id.isEmpty()) {
-            db.collection("articles").document(id).addSnapshotListener((snapshot, error) -> {
-                if (snapshot != null && snapshot.exists()) {
-                    Long updatedViews = snapshot.getLong("views");
-                    if (updatedViews != null) {
-                        tvDetailViews.setText("Lượt xem: " + updatedViews);
-                    }
-                }
-            });
         }
     }
 }
