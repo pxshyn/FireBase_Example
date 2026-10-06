@@ -67,6 +67,7 @@ public class ShowDataActivity extends AppCompatActivity {
                         String title = data.get("title") != null ? data.get("title").toString() : "";
                         String content = data.get("content") != null ? data.get("content").toString() : "";
                         String imageUrl = data.get("imageUrl") != null ? data.get("imageUrl").toString() : "";
+                        
                         long views = 0;
                         if (data.get("views") instanceof Long) {
                             views = (Long) data.get("views");
@@ -74,9 +75,20 @@ public class ShowDataActivity extends AppCompatActivity {
                             views = ((Number) data.get("views")).longValue();
                         }
 
-                        Article article = new Article(id, title, content, imageUrl, views);
+                        long timestamp = 0;
+                        if (data.get("timestamp") instanceof Long) {
+                            timestamp = (Long) data.get("timestamp");
+                        } else if (data.get("timestamp") instanceof Number) {
+                            timestamp = ((Number) data.get("timestamp")).longValue();
+                        }
+
+                        Article article = new Article(id, title, content, imageUrl, views, timestamp);
                         articles.add(article);
                     }
+
+                    // Sắp xếp bài viết mới nhất lên đầu danh sách
+                    articles.sort((a1, a2) -> Long.compare(a2.getTimestamp(), a1.getTimestamp()));
+
                     adapter.update(articles);
                     adapter.notifyDataSetChanged();
                 }

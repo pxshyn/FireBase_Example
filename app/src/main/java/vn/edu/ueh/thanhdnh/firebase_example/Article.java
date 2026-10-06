@@ -13,24 +13,27 @@ public class Article {
   private String content;
   private String imageUrl;
   private long views;
+  private long timestamp;
 
   public Article() {
     // Constructor rỗng bắt buộc cho Firebase
   }
 
-  public Article(String id, String title, String content, String imageUrl, long views) {
+  public Article(String id, String title, String content, String imageUrl, long views, long timestamp) {
     this.id = id;
     this.title = title;
     this.content = content;
     this.imageUrl = imageUrl;
     this.views = views;
+    this.timestamp = timestamp;
   }
 
-  public Article(String title, String content, String imageUrl, long views) {
+  public Article(String title, String content, String imageUrl, long views, long timestamp) {
     this.title = title;
     this.content = content;
     this.imageUrl = imageUrl;
     this.views = views;
+    this.timestamp = timestamp;
   }
 
   public String getId() {
@@ -73,6 +76,14 @@ public class Article {
     this.views = views;
   }
 
+  public long getTimestamp() {
+    return timestamp;
+  }
+
+  public void setTimestamp(long timestamp) {
+    this.timestamp = timestamp;
+  }
+
   @Exclude
   public Map<String, Object> toMap() {
     HashMap<String, Object> result = new HashMap<>();
@@ -80,6 +91,7 @@ public class Article {
     result.put("content", content);
     result.put("imageUrl", imageUrl);
     result.put("views", views);
+    result.put("timestamp", timestamp);
     return result;
   }
 }

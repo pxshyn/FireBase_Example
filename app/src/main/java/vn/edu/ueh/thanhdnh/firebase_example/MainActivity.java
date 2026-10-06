@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       articleMap.put("content", content);
       articleMap.put("imageUrl", imageUrl);
       articleMap.put("views", 0);
+      articleMap.put("timestamp", System.currentTimeMillis()); // Lưu thời điểm tạo bài viết
 
       db.collection("articles").add(articleMap)
           .addOnSuccessListener(documentReference -> {
